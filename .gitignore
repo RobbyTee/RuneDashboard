@@ -24,3 +24,6 @@ __pycache__/
 # Build outputs
 dist/
 build/
+
+# Variables
+.env
