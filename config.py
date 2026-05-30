@@ -1,2 +1,17 @@
-# Use this to generate .env file with default parameters.
-# Additional configs in here.
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    db_host: str
+    db_port: str
+    db_name: str
+    db_user: str
+    db_password: str
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore",
+    )
+
+
+settings = Settings()
