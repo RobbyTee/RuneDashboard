@@ -1,25 +1,4 @@
-from datetime import datetime
-
-from pydantic import BaseModel, ConfigDict, Field
-
-
-class ServerBase(BaseModel):
-    hostname: str = Field(min_length=1, max_length=50)
-    active: bool
-
-
-class ServerCreate(ServerBase):
-    created_at: datetime | None = None
-
-
-class ServerResponse(ServerBase):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int
-
-
-class ServerPatch(ServerBase):
-    pass
+from pydantic import BaseModel, ConfigDict
 
 
 class SkillLevels(BaseModel):
@@ -64,17 +43,3 @@ class AccountCreate(AccountBase):
 
 class AccountPatch(AccountBase):
     account_name: str | None = None
-
-
-class BirdhouseRunBase(BaseModel):
-    account_id: int
-    bird_nests: int
-
-
-class BirdhouseRunCreate(BirdhouseRunBase):
-    pass
-
-
-class BirdhouseRunResponse(BirdhouseRunBase):
-    model_config = ConfigDict(from_attributes=True)
-    id: int

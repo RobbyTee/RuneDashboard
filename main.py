@@ -3,18 +3,13 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, HTTPException, Response, status
 from sqlalchemy.orm import Session
 
-from database.database import Base, engine, get_db
-from database.models import Account, BirdhouseRun, Server
-from database.schemas import (
-    AccountCreate,
-    AccountPatch,
-    AccountResponse,
-    BirdhouseRunCreate,
-    BirdhouseRunResponse,
-    ServerCreate,
-    ServerPatch,
-    ServerResponse,
-)
+from database import Base, engine, get_db
+from models.account import Account
+from models.bh_run import BirdhouseRun
+from models.server import Server
+from schemas.account import AccountCreate, AccountPatch, AccountResponse
+from schemas.bh_run import BirdhouseRunCreate, BirdhouseRunResponse
+from schemas.server import ServerCreate, ServerPatch, ServerResponse
 
 Base.metadata.create_all(bind=engine)
 
