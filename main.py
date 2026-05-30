@@ -107,11 +107,33 @@ def get_all_accounts(db: Annotated[Session, Depends(get_db)]):
     return db.query(Account).all()
 
 
+@app.get(
+    "/api/accounts/name/{account_name}",
+    response_model=AccountResponse,
+)
+def get_account_info_by_name(
+    account_name: str,
+    db: Annotated[Session, Depends(get_db)],
+):
+    account = db.query(Account).filter(Account.account_name == account_name).first()
+
+    if not account:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No account found with name: {account_name}",
+        )
+
+    return account
+
+
 @app.post(
     "/api/accounts",
     response_model=AccountResponse,
 )
-def create_account(account: AccountCreate, db: Annotated[Session, Depends(get_db)]):
+def create_account(
+    account: AccountCreate,
+    db: Annotated[Session, Depends(get_db)],
+):
     result = db.query(Account).filter(Account.account_name == account.account_name)
 
     existing_account = result.first()
